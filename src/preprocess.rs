@@ -166,7 +166,7 @@ fn normalize_into(rgb: &[u8], planar: &mut [f32]) {
     let (r_plane, rest) = planar.split_at_mut(PLANE);
     let (g_plane, b_plane) = rest.split_at_mut(PLANE);
 
-    for (i, px) in rgb.chunks_exact(3).enumerate() {
+    for (i, px) in rgb.as_chunks::<3>().0.iter().enumerate() {
         r_plane[i] = LUT[px[0] as usize];
         g_plane[i] = LUT[px[1] as usize];
         b_plane[i] = LUT[px[2] as usize];
