@@ -34,8 +34,12 @@ def main() -> int:
 
     try:
         from onnxruntime.quantization import QuantType, quantize_dynamic
-    except ImportError:
-        print("error: onnxruntime is not installed. Run: pip install onnxruntime", file=sys.stderr)
+    except ImportError as exc:
+        print(
+            f"error: {exc}. Install the dependencies with:\n"
+            "  pip install onnxruntime onnx",
+            file=sys.stderr,
+        )
         return 1
 
     if not args.model.is_file():
@@ -44,9 +48,7 @@ def main() -> int:
 
     output = args.output or args.model.with_suffix(".int8.onnx")
 
-    from onnxruntime.quantization import quantize_dynamic as _qd
-
-    _qd(
+    quantize_dynamic(
         model_input=str(args.model),
         model_output=str(output),
         weight_type=QuantType.QUInt8,

@@ -35,19 +35,22 @@ YOLO11n (`yolo11n.onnx`), `bus.jpg` (810x1080), 100 timed iterations after 5
 warmups, `cargo build --release`. Only 2 vCPUs are exposed to the VM, so the
 absolute inference numbers are high; the speedups are the point.
 
-| Stage | Upstream `yolo-rs` | `yolo-cpuup-rs` | Speedup |
-|-------|-------------------:|----------------:|--------:|
-| Preprocess | 62.78 ms | **6.24 ms** | **10.1x** |
-| Inference + postprocess | 274.95 ms | 187.41 ms | 1.47x |
-| **Total** | **337.73 ms** | **193.65 ms** | **1.74x** |
+| Stage | Upstream FP32 | Optimized FP32 | Optimized INT8 |
+|-------|--------------:|---------------:|---------------:|
+| Preprocess | 62.78 ms | **6.24 ms** | 6.46 ms |
+| Inference + postprocess | 274.95 ms | 187.41 ms | **153.39 ms** |
+| **Total** | **337.73 ms** | **193.65 ms** | **159.84 ms** |
+| vs. upstream | 1.00x | **1.74x** | **2.11x** |
+| Model size | 10.7 MB | 10.7 MB | **3.0 MB** |
 
 * Preprocessing speedup comes from the SIMD/multi-threaded resize and the LUT +
   contiguous NCHW write.
 * Inference speedup comes from session tuning (notably intra/inter-op thread
-  settings — the default inter-op pool oversubscribes a small VM).
-* Detections are identical: `examples/parity` reports the same 5 boxes (same
-  class, within 2px) for both preprocessing paths, with a max tensor difference
-  of `0.0235` and a mean difference of `0.0007`.
+  settings — the default inter-op pool oversubscribes a small VM), plus optional
+  INT8 quantization for a further ~20%.
+* Detections are stable: `examples/parity` reports the same 5 boxes (same class,
+  within 2px) for both preprocessing paths, with a max tensor difference of
+  `0.0235` and a mean difference of `0.0007`.
 <!-- BENCHMARK:END -->
 
 Reproduce with this crate's own benchmark example:
@@ -139,7 +142,7 @@ yolo export model=yolo11n.pt format=onnx
 Dynamic quantization shrinks the graph and speeds up CPU inference further:
 
 ```bash
-pip install onnxruntime
+pip install onnxruntime onnx
 python scripts/quantize_int8.py yolo11n.onnx          # -> yolo11n.int8.onnx
 cargo run --release --example detect -- yolo11n.int8.onnx bus.jpg --profile 100
 ```
