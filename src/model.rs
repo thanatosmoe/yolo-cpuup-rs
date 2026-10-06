@@ -6,10 +6,10 @@ use std::time::{Duration, Instant};
 use arcstr::ArcStr;
 use image::DynamicImage;
 use ort::ep::CPU;
+use ort::inputs;
 use ort::session::builder::{GraphOptimizationLevel, SessionBuilder};
 use ort::session::Session;
 use ort::value::TensorRef;
-use ort::inputs;
 
 use crate::error::YoloError;
 use crate::labels::COCO_LABELS;

@@ -46,9 +46,23 @@ pub fn decode(
     }
 
     let candidates = if attribute_major {
-        decode_attribute_major(data, anchors, num_classes, labels, probability_threshold, scale)?
+        decode_attribute_major(
+            data,
+            anchors,
+            num_classes,
+            labels,
+            probability_threshold,
+            scale,
+        )?
     } else {
-        decode_anchor_major(data, anchors, num_classes, labels, probability_threshold, scale)?
+        decode_anchor_major(
+            data,
+            anchors,
+            num_classes,
+            labels,
+            probability_threshold,
+            scale,
+        )?
     };
 
     Ok(non_maximum_suppression(candidates, iou_threshold))

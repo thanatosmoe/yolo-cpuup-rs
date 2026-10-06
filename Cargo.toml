@@ -2,7 +2,7 @@
 name = "yolo-cpuup-rs"
 version = "0.1.0"
 edition = "2021"
-rust-version = "1.87"
+rust-version = "1.88"
 description = "CPU-optimized YOLO (v8/v11) object detection inference in Rust, built on ONNX Runtime."
 authors = ["thanatos <thanatosmoe@gmail.com>"]
 license = "MIT OR Apache-2.0"

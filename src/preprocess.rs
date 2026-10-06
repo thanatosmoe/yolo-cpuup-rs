@@ -145,8 +145,11 @@ pub fn preprocess_reference_into(
     image: &DynamicImage,
     out: &mut PreprocessedInput,
 ) -> Result<(), YoloError> {
-    let resized =
-        image.resize_exact(INPUT_SIZE, INPUT_SIZE, image::imageops::FilterType::CatmullRom);
+    let resized = image.resize_exact(
+        INPUT_SIZE,
+        INPUT_SIZE,
+        image::imageops::FilterType::CatmullRom,
+    );
     let rgb = resized.to_rgb8();
     normalize_into(rgb.as_raw(), &mut out.data);
     out.raw_width = image.width();

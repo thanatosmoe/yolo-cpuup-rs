@@ -59,9 +59,18 @@ fn main() -> Result<()> {
         let t = profile.timings;
         let total = t.total().as_secs_f64() * 1e3;
         println!("runs            : {}", args.profile);
-        println!("preprocess      : {:>8.3} ms", t.preprocess.as_secs_f64() * 1e3);
-        println!("inference       : {:>8.3} ms", t.inference.as_secs_f64() * 1e3);
-        println!("postprocess     : {:>8.3} ms", t.postprocess.as_secs_f64() * 1e3);
+        println!(
+            "preprocess      : {:>8.3} ms",
+            t.preprocess.as_secs_f64() * 1e3
+        );
+        println!(
+            "inference       : {:>8.3} ms",
+            t.inference.as_secs_f64() * 1e3
+        );
+        println!(
+            "postprocess     : {:>8.3} ms",
+            t.postprocess.as_secs_f64() * 1e3
+        );
         println!("total           : {:>8.3} ms", total);
         println!("throughput      : {:>8.1} FPS", 1e3 / total);
         println!();

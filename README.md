@@ -1,5 +1,7 @@
 # yolo-cpuup-rs
 
+[![CI](https://github.com/thanatosmoe/yolo-cpuup-rs/actions/workflows/ci.yml/badge.svg)](https://github.com/thanatosmoe/yolo-cpuup-rs/actions/workflows/ci.yml)
+
 CPU-optimized [YOLO](https://docs.ultralytics.com) (v8 / v11) object detection
 inference in Rust, built on [ONNX Runtime](https://onnxruntime.ai).
 

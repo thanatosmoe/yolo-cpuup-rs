@@ -52,7 +52,11 @@ fn main() -> Result<()> {
     let reference_detections = model.detect(&reference)?;
 
     println!();
-    println!("detections: fast={} reference={}", fast_detections.len(), reference_detections.len());
+    println!(
+        "detections: fast={} reference={}",
+        fast_detections.len(),
+        reference_detections.len()
+    );
 
     let mut matched = 0usize;
     for reference_detection in &reference_detections {

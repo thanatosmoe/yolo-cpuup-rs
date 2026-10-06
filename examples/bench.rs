@@ -9,8 +9,14 @@ use yolo_cpuup::YoloModel;
 
 fn main() -> Result<()> {
     let mut args = std::env::args().skip(1);
-    let model_path = PathBuf::from(args.next().expect("usage: bench <model.onnx> <image> [runs]"));
-    let image_path = PathBuf::from(args.next().expect("usage: bench <model.onnx> <image> [runs]"));
+    let model_path = PathBuf::from(
+        args.next()
+            .expect("usage: bench <model.onnx> <image> [runs]"),
+    );
+    let image_path = PathBuf::from(
+        args.next()
+            .expect("usage: bench <model.onnx> <image> [runs]"),
+    );
     let runs: usize = args.next().map(|s| s.parse().unwrap()).unwrap_or(50);
 
     let image = image::open(&image_path)?;
