@@ -1,0 +1,14 @@
+// CPU-optimized YOLO inference in Rust.
+//
+// Copyright (c) 2026 thanatos
+//
+// This project is a derivative work of `pan93412/yolo-rs`
+// (https://github.com/pan93412/yolo-rs), Copyright (c) Yi-Jyun Pan,
+// dual-licensed under MIT OR Apache-2.0. Significant portions of the API and
+// inference pipeline are based on it.
+//
+// It also builds on the Ultralytics YOLO models
+// (https://github.com/ultralytics/ultralytics, AGPL-3.0). The model weights /
+// ONNX graphs are governed by their own license; this crate only consumes them.
+
+See LICENSE-MIT and LICENSE-APACHE for the full license texts.

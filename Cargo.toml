@@ -1,0 +1,38 @@
+[package]
+name = "yolo-cpuup-rs"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.87"
+description = "CPU-optimized YOLO (v8/v11) object detection inference in Rust, built on ONNX Runtime."
+authors = ["thanatos <thanatosmoe@gmail.com>"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/thanatosmoe/yolo-cpuup-rs"
+readme = "README.md"
+keywords = ["yolo", "object-detection", "onnx", "inference", "cpu"]
+categories = ["science", "computer-vision"]
+
+[lib]
+name = "yolo_cpuup"
+path = "src/lib.rs"
+
+[dependencies]
+arcstr = "1.2"
+image = "0.25"
+ort = "2.0.0-rc.12"
+thiserror = "2.0"
+# SIMD + multi-threaded image resizing (the biggest CPU preprocessing win).
+fast_image_resize = { version = "6.1", features = ["image", "rayon"] }
+
+[features]
+default = []
+# Build a self-contained project when system OpenSSL dev headers are missing
+# (`sudo apt install pkg-config libssl-dev` is the portable alternative).
+vendored-tls = ["ort/tls-native-vendored"]
+
+[dev-dependencies]
+anyhow = "1.0"
+clap = { version = "4", features = ["derive"] }
+
+[profile.release]
+opt-level = 3
+strip = true
